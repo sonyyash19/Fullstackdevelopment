@@ -14,7 +14,7 @@ const Signin = () => {
   })
 
   const { email, password, error, loading, didRedirect } = values
-  const { user } = isAuthenticated
+  const { user } = isAuthenticated();
 
   const handleChanges = (name) => (event) => {
     setValues({
@@ -25,7 +25,7 @@ const Signin = () => {
   }
 
   const onSubmit = (event) => {
-    event.preventDefault()
+ event.preventDefault()
     setValues({
       ...values,
       error: false,
@@ -48,7 +48,7 @@ const Signin = () => {
           })
         }
       })
-      .catch(console.log('Signin request failed'))
+      .catch(error => console.log('Signin request failed'))
   }
 
   const performRedirect = () => {
