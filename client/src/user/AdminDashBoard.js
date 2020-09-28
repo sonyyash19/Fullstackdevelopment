@@ -1,12 +1,12 @@
-import React from 'react'
-import Base from '../core/Base'
-import { isAuthenticated } from '../auth/helper'
-import { Link } from 'react-router-dom'
+import React from "react";
+import Base from "../core/Base";
+import { isAuthenticated } from "../auth/helper";
+import { Link } from "react-router-dom";
 
 const AdminDashBoard = () => {
   const {
     user: { name, email, role },
-  } = isAuthenticated()
+  } = isAuthenticated();
 
   const adminLeftSide = () => {
     return (
@@ -40,8 +40,8 @@ const AdminDashBoard = () => {
           </li>
         </ul>
       </div>
-    )
-  }
+    );
+  };
 
   const adminRightSide = () => {
     return (
@@ -60,8 +60,8 @@ const AdminDashBoard = () => {
           </li>
         </ul>
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <Base
@@ -74,7 +74,7 @@ const AdminDashBoard = () => {
         <div className="col-9">{adminRightSide()}</div>
       </div>
     </Base>
-  )
-}
+  );
+};
 
-export default AdminDashBoard
+export default AdminDashBoard;
