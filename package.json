@@ -30,6 +30,8 @@
     "morgan": "^1.9.1",
     "nodemon": "^2.0.4",
     "npm": "^6.14.5",
+    "react-stripe-checkout": "^2.6.3",
+    "stripe": "^8.116.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

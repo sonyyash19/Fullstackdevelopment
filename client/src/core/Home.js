@@ -1,14 +1,43 @@
-import React from 'react'
-import '../styles.css'
-import { API } from '../backend';
-import Base from './Base';
+import React, { useState } from "react";
+import "../styles.css";
+import { API } from "../backend";
+import Base from "./Base";
+import Card from "./Card";
+import { getProducts } from "./helper/coreapicalls";
+import { useEffect } from "react";
 
 export default function Home() {
-    console.log("API is", API);
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState(false);
 
-    return (
-        <Base title="Home Page" description="Welcome to the t-shirt store">
-            <h1 className="text-white">Hello Front End </h1>
-        </Base>
-    );
+  const loadAllProducts = () => {
+    getProducts().then((data) => {
+      if (data.error) {
+        setError(data.error);
+      } else {
+        setProducts(data);
+      }
+    });
+  };
+
+  useEffect(() => {
+    loadAllProducts();
+  }, []);
+
+  return (
+    <Base title="Home Page" description="Welcome to the t-shirt store">
+      <div className="row text-center">
+        <h1 className="text-white">All of tshirts</h1>
+        <div className="row">
+          {products.map((product, index) => {
+            return (
+              <div key={index} className="col-4 mb-4">
+                <Card product={product} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </Base>
+  );
 }
