@@ -4,8 +4,8 @@ const cookieParser      = require("cookie-parser"),
       bodyParser        = require("body-parser"),
       mongoose          = require('mongoose'),
       express           = require("express"),
-      cors              = require("cors"),
-      app               = express();
+      cors              = require("cors");
+const  app               = express();
 
     //   My routes
 const authRoutes = require("./routes/auth");
@@ -26,7 +26,7 @@ mongoose.connect(process.env.DATABASE, {
 
 
 // my middleware
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
 

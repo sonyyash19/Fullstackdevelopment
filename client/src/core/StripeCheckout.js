@@ -4,7 +4,6 @@ import { isAuthenticated } from "../auth/helper";
 import { cartEmpty, loadCart } from "./helper/cartHelper";
 import StripeCheckoutButton from 'react-stripe-checkout';
 import { API } from "../backend";
-import { response } from "express";
 // import {createOrder} from "./orderHelper"
 
 const StripeCheckout = ({
@@ -45,6 +44,9 @@ const StripeCheckout = ({
       body: JSON.stringify(body)
     }).then(response => {
       console.log(response);
+      const {status} = response;
+      console.log("STATUS", status);
+      
     }).catch(err => {
       console.log(err);
     })
@@ -53,7 +55,7 @@ const StripeCheckout = ({
   const showStripeButton = () => {
     return isAuthenticated() ? (
       <StripeCheckoutButton
-      stripeKey=""
+      stripeKey="pk_test_51HafilJGGPlWmPc1lqNCBCaTPRHsw5Hod3kcDdG5ZMpdkINKxy2iWJC8wJZRzIhxDGzPyOfgJoF5sxqUpVew5oik00Dx8il3cT"
       token={makepayment}
       amount={getFinalAmount() * 100}
       name="Buy tshirts"

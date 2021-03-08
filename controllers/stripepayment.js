@@ -1,4 +1,4 @@
-const stripe = require("stripe")("SECRET_KEY");
+const stripe = require("stripe")("sk_test_51HafilJGGPlWmPc17S66sa9HAIQORXuRhv9trZYwodHQL96l4dRsTlWUijSWq4mngtx63RuIeECSQBQqxADLRE2k00q6GvO2zN");
 const uuid = require("uuid/v4");
 
 exports.makepayment = (req, res) => {
@@ -17,7 +17,7 @@ exports.makepayment = (req, res) => {
         source: token.id
     }).then(customer => {
         stripe.charges.create({
-            amount: amount,
+            amount: amount * 100,
             currency: "usd",
             receipt_email: token.email,
             shipping: {
