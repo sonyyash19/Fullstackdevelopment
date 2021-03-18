@@ -6,7 +6,9 @@ import Card from "./Card";
 import { getProducts } from "./helper/coreapicalls";
 import { useEffect } from "react";
 import { loadCart } from "./helper/cartHelper";
-import StripeCheckout from "./StripeCheckout";
+import Paymentb from "./Paymentb";
+
+
 
 export default function Cart() {
   const [products, setProducts] = useState([]);
@@ -16,12 +18,12 @@ export default function Cart() {
     setProducts(loadCart);
   }, [reload]);
 
-  const loadAllProducts = () => {
+  const loadAllProducts = (products) => {
     return (
       <div>
         <h2>This section loads all products</h2>
-        {products.map((product, index) => {
-          return (
+        {products.map((product, index) => (
+          
             <Card
               key={index}
               product={product}
@@ -30,8 +32,8 @@ export default function Cart() {
               setReload={setReload}
               reload={reload}
             />
-          );
-        })}
+          
+        ))}
       </div>
     );
   };
@@ -47,9 +49,10 @@ export default function Cart() {
   return (
     <Base title="Cart Page" description="Ready to checkout">
       <div className="row text-center">
-        <div className="col-6">{loadAllProducts()}</div>
+        <div className="col-6">{ products.length > 0 ?  ( loadAllProducts(products) ) : ( <h3>No products in cart </h3>)}</div>
         <div className="col-6">
-          <StripeCheckout products={products} setReload={setReload} />
+           <Paymentb products={products} setReload={setReload} />
+          {/* <StripeCheckout products={products} setReload={setReload} /> */}
         </div>
       </div>
     </Base>
