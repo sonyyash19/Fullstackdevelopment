@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import "../styles.css";
-import { API } from "../backend";
 import Base from "./Base";
 import Card from "./Card";
-import { getProducts } from "./helper/coreapicalls";
+import { getProducts } from "../admin/helper/adminapicall";
 import { useEffect } from "react";
 
 export default function Home() {
@@ -17,7 +16,9 @@ export default function Home() {
       } else {
         setProducts(data);
       }
-    });
+    }).catch(
+      err => console.log(err)
+    )
   };
 
   useEffect(() => {
