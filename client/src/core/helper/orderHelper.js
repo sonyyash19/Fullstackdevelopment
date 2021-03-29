@@ -1,5 +1,5 @@
-export const createOrder = (userId, token, orderData) => {
-  return fetch(`api/order/creeate/${userId}`, {
+ const createOrder = (userId, token, orderData) => {
+  return fetch(`api/order/create/${userId}`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -9,9 +9,11 @@ export const createOrder = (userId, token, orderData) => {
     body: JSON.stringify({ order: orderData }),
   })
     .then((response) => {
-      return Response.json();
+      return response.json();
     })
     .catch((err) => {
       console.log(err);
     });
 };
+
+export default createOrder;

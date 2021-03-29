@@ -28,6 +28,7 @@ export default function Cart() {
               product={product}
               removeFromCart={true}
               addtoCart={false}
+              quantity={product.count}
               setReload={setReload}
               reload={reload}
             />

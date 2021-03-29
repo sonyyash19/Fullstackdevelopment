@@ -9,6 +9,7 @@ const Card = ({
   addtoCart = true,
   removeFromCart = false,
   setReload = (f) => f,
+  quantity = 0,
   reload = undefined,
 }) => {
   const [redirect, setRedirect] = useState(false);
@@ -43,6 +44,16 @@ const Card = ({
     );
   };
 
+  const showqty = (removeFromCart) => {
+    if(removeFromCart){
+      return (
+        <p className= "lead bg-success font-weight-normal text-wrap">
+          Quantity: {quantity}
+        </p>
+      )
+    }
+  }
+
   const showRemoveFromCart = (removeFromCart) => {
     return (
       removeFromCart && (
@@ -58,6 +69,9 @@ const Card = ({
       )
     );
   };
+
+
+  
   return (
     <div className="card text-white bg-dark border border-info ">
       <div className="card-header lead">{cartTitle}</div>
@@ -73,6 +87,8 @@ const Card = ({
         <div className="row">
           <div className="col-12">{showAddToCart(addtoCart)}</div>
           <div className="col-12">{showRemoveFromCart(removeFromCart)}</div>
+          <div className="col-12">{showqty(removeFromCart)}</div>
+         
         </div>
       </div>
     </div>

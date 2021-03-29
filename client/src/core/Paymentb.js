@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { isAuthenticated } from '../auth/helper';
 import { cartEmpty, loadCart } from './helper/cartHelper';
 import { getmeToken, processPayment } from './helper/paymentbhelper';
-import Link from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import createOrder from './helper/orderHelper';
 import DropIn from 'braintree-web-drop-in-react';
 // import { response } from 'express';
@@ -34,9 +34,10 @@ const Paymentb = ({products, setReload = f => f, reload = undefined}) => {
     }
 
     const showbtdropIn = () => {
+        if(!info.error && info.clientToken !== null && products.length) {
         return(
             <div>
-                {!info.error && info.clientToken !== null && products.length > 0 ?  (
+               
                      <div>
                      <DropIn
                        options={{ authorization: info.clientToken }}
@@ -44,9 +45,28 @@ const Paymentb = ({products, setReload = f => f, reload = undefined}) => {
                      />
                      <button className="btn btn-block btn-success" onClick={onPurchase}>Buy</button>
                    </div>
-                ) : ( <h3>Please login or add something to cart</h3> ) }
+             
             </div>
         )
+    }
+    }
+
+    const showsigninmsg = () => {
+        console.log("Not signed in");
+        if(!isAuthenticated()){
+            return(
+            <h3> <Link to="/signin">Signin</Link> </h3>
+            )
+        }
+    }
+
+    const additemtocart = () => {
+        
+        if(products.length === 0){
+            return(
+            <h3><Link to="/">Add item to cart</Link></h3>
+            )
+        }
     }
 
     useEffect(() => {
@@ -68,11 +88,26 @@ const Paymentb = ({products, setReload = f => f, reload = undefined}) => {
                  processPayment(userId, token, paymentData)
                  .then( response => {
                      setInfo({...info, success: response.success, loading: false})
-                    //  console.log("payment success");
+                     console.log("payment success");
+
+                     const orderData = {
+                         products: products,
+                         transaction_id: response.transaction.id,
+                         amount: response.transaction.amount
+                     }
+                     createOrder(userId, token, orderData);
+
+
+                     cartEmpty(() => {
+                         console.log("Did we got a crash?");
+                     })
+
+                     setReload(!reload);
+
                  })
                  .catch( error => {
                      setInfo({loading: false, success: false})
-                    //  console.log("payment success");
+                     console.log("payment failed");
                  })
              })
     }
@@ -91,6 +126,8 @@ const Paymentb = ({products, setReload = f => f, reload = undefined}) => {
         <div>
             <h3>Your bill is {getAmount()}$ </h3>
             {showbtdropIn()}
+            {showsigninmsg()}
+            {additemtocart()}
         </div>
     )
 }
